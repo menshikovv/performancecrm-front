@@ -1,0 +1,80 @@
+.app { background: radial-gradient(ellipse 800px 460px at 250px -70px,#073b78 0%,#071d40 43%,transparent 100%),#070c18; }
+.workspace { padding-bottom: 44px; }
+.topbar a { text-decoration: none; }
+.heading { margin-bottom: 29px; }
+.eyebrow { display: inline-flex; padding: 6px 12px; border: 1px solid #1c5b7a; border-radius: 999px; color: #72ddff; background: #10334d; font-size: 12px; font-weight: 600; line-height: 1; letter-spacing: 1.1px; text-transform: uppercase; }
+.heading h1 { margin: 9px 0 10px; font-size: clamp(32px,3.65vw,54px); font-weight: 800; line-height: 1.15; letter-spacing: -1px; text-transform: uppercase; }
+.heading p { margin: 0; color: #b4bfd4; font-size: 19px; font-weight: 500; line-height: 1.5; }
+.summary { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 16px; margin-bottom: 28px; }
+.summary article { min-width: 0; min-height: 124px; padding: 19px 20px; border: 1px solid #1d2841; border-radius: 19px; background: #0e1425; }
+.summary article>span { display: flex; align-items: center; gap: 7px; color: #899bb9; font-size: 13px; font-weight: 500; }
+.summary article>span svg { color: #72d8fa; }
+.summary article>strong { display: block; margin: 6px 0 3px; color: #eff3ff; font-size: 34px; font-weight: 800; line-height: 1.15; letter-spacing: -.4px; }
+.summary small { margin-left: 4px; color: #8293b4; font-size: 19px; font-weight: 700; }
+.summary p { margin: 0; color: #9daec9; font-size: 13px; font-weight: 500; line-height: 1.5; }
+.summary article.accentSummary { border-color: #16466a; background: linear-gradient(120deg,#0b2244,#0e1525 80%); }
+.accentSummary p { color: #c5d6ef; font-weight: 600; }
+.panel { min-width: 0; margin-bottom: 28px; padding: 25px; border: 1px solid #1d2841; border-radius: 25px; background: #0e1425; }
+.panel h2 { margin: 0; color: #eef2fc; font-size: 26px; font-weight: 700; line-height: 1.25; letter-spacing: -.45px; }
+.panel header p { margin: 4px 0 0; color: #98a8c5; font-size: 14px; font-weight: 500; line-height: 1.4; }
+.weekHeader { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.weekNavigation { display: flex; align-items: center; gap: 15px; flex-shrink: 0; }
+.weekNavigation button { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid #26324e; border-radius: 13px; color: #b8c6de; background: #161e32; transition: background .18s,border-color .18s; }
+.weekNavigation button:hover:not(:disabled) { border-color: #377aa1; color: #89e1ff; background: #193047; }
+.weekNavigation button:disabled { opacity: .4; cursor: default; }
+.weekNavigation strong { min-width: 134px; color: #edf2fc; font-size: 15px; font-weight: 600; text-align: center; }
+.legend { display: flex; align-items: center; gap: 19px; min-height: 17px; margin: 17px 0 20px; }
+.legend span { display: flex; align-items: center; gap: 8px; color: #9baac6; font-size: 13px; font-weight: 500; }
+.legend i { display: block; width: 18px; height: 6px; border-radius: 99px; }
+.legend button { margin-left: auto; padding: 0; border: 0; color: #69d9ff; background: none; font-size: 12px; }
+.days { position: relative; display: grid; grid-template-columns: repeat(7,minmax(0,1fr)); gap: 12px; }
+.day { display: flex; flex-direction: column; min-width: 0; min-height: 149px; padding: 14px; border: 1px solid #25314e; border-radius: 17px; color: #bfcce1; background: #161d31; text-align: left; transition: background .18s,border-color .18s,box-shadow .18s; }
+.day:hover:not(:disabled) { border-color: #366a93; background: #18263e; }
+.day.daySelected { border-color: #0096e8; background: linear-gradient(140deg,#0c3061,#10213b); box-shadow: 0 0 0 1px #029de415,0 7px 22px #007bff0c; }
+.day:disabled { color: #667797; cursor: default; opacity: .8; }
+.dayTop { display: flex; align-items: center; justify-content: space-between; gap: 3px; min-height: 16px; color: #8a9dbd; font-size: 12px; font-weight: 600; text-transform: uppercase; }
+.dayTop em { padding: 2px 7px; border-radius: 999px; color: #72dbff; background: #104c72; font-size: 10px; font-style: normal; line-height: 1.2; letter-spacing: .5px; }
+.day>strong { margin: 6px 0 8px; color: #eff2fc; font-size: 29px; font-weight: 800; line-height: 1; }
+.day:disabled>strong { color: #6d7b9b; }
+.dayScore { display: flex; align-items: center; gap: 7px; margin-bottom: 4px; font-size: 14px; line-height: 1.2; }
+.dayScore svg { color: #879cbd; }.dayScore b { font-weight: 600; }.dayScore .missing { color: #7686a6; }.dayScore .low { color: #ff9d60; }.dayScore .high { color: #6edcff; }
+.slotIndicators { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 4px; width: 100%; margin-top: auto; padding-top: 8px; }
+.slotIndicators i { height: 6px; border-radius: 999px; background: #29324b; }
+.records { margin-bottom: 0; }
+.recordsHeader { margin-bottom: 22px; }.recordsHeader>p::first-letter { text-transform: uppercase; }
+.slots { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; animation: contentIn .2s ease; }
+.slotCard { min-width: 0; min-height: 254px; padding: 21px 20px; border: 1px solid #24304b; border-top: 3px solid var(--slot-color); border-radius: 20px; background: #161d31; }
+.slotCard>header { display: flex; align-items: center; gap: 14px; min-height: 45px; margin-bottom: 18px; }
+.slotIcon { display: grid; place-items: center; width: 45px; height: 45px; flex-shrink: 0; border-radius: 14px; color: var(--slot-color); background: color-mix(in srgb,var(--slot-color) 15%,transparent); }
+.slotCard h3 { margin: 0; font-size: 18px; font-weight: 700; line-height: 1.25; }.slotCard header p { margin-top: 3px; color: #8b9ebf; font-size: 13px; line-height: 1.2; }
+.slotCard header>div { min-width: 0; flex: 1; }.slotStatus { flex-shrink: 0; padding: 5px 9px; border-radius: 999px; color: #b5c2da; background: #202940; font-size: 11px; line-height: 1.2; }
+.rating { margin-top: 12px; }.rating>div:first-child { display: flex; align-items: center; justify-content: space-between; gap: 5px; margin-bottom: 7px; font-size: 14px; color: #b6c3d8; font-weight: 500; }.rating strong { color: #e0e8fa; font-size: 14px; font-weight: 700; }.rating small { color: #7f90af; font-size: 13px; }
+.rating>div:last-child { height: 8px; overflow: hidden; border-radius: 999px; background: #242e48; }.rating i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(100deg,#0071ff,#00c3ed); transition: width .3s ease; }
+.editButton { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; margin-top: 17px; padding: 10px 17px; border: 1px solid #2b3856; border-radius: 12px; color: #bac8df; background: #151e32; font-size: 14px; font-weight: 600; transition: border-color .18s,background .18s; }.editButton:hover { border-color: #367d9f; background: #1a2b43; }
+.emptySlot { min-height: 56px; margin: 0 0 17px; color: #9baaca; font-size: 14px; font-weight: 500; line-height: 1.4; }.slotCard>.primaryButton { min-height: 44px; }
+.slotCard>button { font-size: 14px; }.savedNote { margin: 15px 0 0; color: #9eb1cf; font-size: 12px; font-weight: 500; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }
+.loading { min-height: 430px; padding: 35px 0; color: #8baac7; font-size: 14px; }
+.infoBody { display: grid; gap: 15px; padding: 25px; }.infoBody h3 { margin: 0; font-size: 19px; }.infoBody p { margin: 0; color: #a5b7d2; font-size: 14px; font-weight: 500; line-height: 1.7; }.infoBody>a { text-decoration: none; }.streak { color: #67d9ff; font-size: 60px; }
+.notification { display: flex; align-items: center; gap: 15px; padding: 15px; border: 1px solid #2b3f5c; border-radius: 13px; color: #dceaff; background: #17273e; text-decoration: none; }.notification span { min-width: 0; flex: 1; }.notification strong { display: block; font-size: 14px; }.notification small { display: block; margin-top: 5px; color: #92aaca; font-size: 12px; font-weight: 500; line-height: 1.5; }
+@keyframes contentIn { from { opacity: .6; transform: translateY(5px); } }
+@media (max-width: 1279px) {
+  .workspace { padding-top: 18px; }.topbar { height: 51px; margin-bottom: 23px; }.topbar>a { width: 350px; height: 51px; padding: 10px 16px; gap: 12px; }.topbar>a strong { font-size: 12px; }.topbar>a small { font-size: 11px; }.topbar>button { height: 42px; border-radius: 13px; }.topbar>button:first-of-type { min-width: 66px; padding-inline: 12px; }.topbar>button:first-of-type strong { font-size: 15px; }.topbar>button:last-child { width: 42px; }
+  .heading { margin-bottom: 24px; }.heading p { font-size: 16px; }.eyebrow { font-size: 10px; }.summary { gap: 13px; margin-bottom: 23px; }.summary article { min-height: 102px; padding: 15px 17px; border-radius: 16px; }.summary article>span,.summary p { font-size: 11px; }.summary article>strong { font-size: 29px; }.summary small { font-size: 16px; }
+  .panel { padding: 21px; margin-bottom: 23px; border-radius: 22px; }.panel h2 { font-size: 22px; }.panel header p { font-size: 12px; }.weekNavigation { gap: 13px; }.weekNavigation button { width: 37px; height: 38px; border-radius: 12px; }.weekNavigation strong { min-width: 114px; font-size: 13px; }.weekHeader { gap: 13px; }.legend { gap: 17px; margin: 14px 0 17px; }.legend span { font-size: 11px; }.legend i { width: 15px; height: 5px; }
+  .days { gap: 10px; }.day { min-height: 123px; padding: 11px 12px; border-radius: 14px; }.dayTop { font-size: 10px; }.dayTop em { padding-inline: 6px; font-size: 8px; }.day>strong { margin: 5px 0 8px; font-size: 25px; }.dayScore { gap: 5px; margin-bottom: 3px; font-size: 12px; }.dayScore svg { width: 13px; height: 13px; }.slotIndicators { padding-top: 5px; }.slotIndicators i { height: 5px; }
+  .recordsHeader { margin-bottom: 18px; }.slots { gap: 13px; }.slotCard { min-height: 209px; padding: 17px 16px; border-radius: 17px; }.slotCard>header { gap: 12px; margin-bottom: 15px; min-height: 37px; }.slotIcon { width: 37px; height: 37px; border-radius: 11px; }.slotIcon svg { width: 22px; height: 22px; }.slotCard h3 { font-size: 16px; }.slotCard header p { font-size: 11px; }.slotStatus { padding: 4px 8px; font-size: 10px; }.rating { margin-top: 10px; }.rating>div:first-child { margin-bottom: 6px; font-size: 12px; }.rating strong { font-size: 12px; }.rating small { font-size: 11px; }.rating>div:last-child { height: 7px; }.editButton { min-height: 37px; margin-top: 14px; padding: 8px 14px; border-radius: 11px; }.slotCard>button { font-size: 12px; }.emptySlot { min-height: 46px; margin-bottom: 14px; font-size: 12px; }.records { margin-bottom: 0; }
+  .heading { margin-bottom: 14px; }.summary article>strong { margin-top: 4px; margin-bottom: 2px; line-height: 1.1; }.panel h2 { line-height: 1.1; }.panel header p { line-height: 1.3; }.legend { margin-bottom: 11px; }.slotCard { padding-block: 16px; }.slotCard>header { margin-bottom: 11px; }.slotCard header p { line-height: 1.1; }.rating { margin-top: 8px; }.rating>div:first-child { line-height: 1.3; }
+}
+@media (max-width: 1099px) {
+  .weekHeader { align-items: flex-start; flex-direction: column; gap: 15px; }.weekNavigation { align-self: flex-end; margin-top: -3px; }.legend { margin-top: -21px; margin-bottom: 21px; }.day { padding: 10px 9px; }.dayTop { align-items: flex-start; flex-direction: column; gap: 5px; min-height: 29px; }.dayTop em { font-size: 7px; }.day { min-height: 133px; }.slots { gap: 10px; }.slotCard { padding-inline: 13px; }.slotCard>header { flex-wrap: wrap; gap: 9px; }.slotStatus { margin-left: auto; }.heading h1 { font-size: 35px; }
+}
+@media (max-width: 850px) {
+  .workspace { padding-top: 20px; }.topbar>a { width: auto; flex: 1; max-width: 426px; }
+  .heading h1 { font-size: clamp(30px,4.8vw,43px); }.weekHeader { flex-direction: row; align-items: center; }.weekNavigation { align-self: auto; margin: 0; }.legend { margin-top: 15px; margin-bottom: 18px; }.dayTop { min-height: 16px; flex-direction: row; }.day { min-height: 125px; }.desktopBreak { display: none; }.slotCard>header { flex-wrap: nowrap; }.summary article { padding-inline: 15px; }
+}
+@media (max-width: 720px) {
+  .heading { margin-bottom: 22px; }.panel h2 { line-height: 1.25; }.panel header p { line-height: 1.4; }.slotCard>header { margin-bottom: 16px; }.slotCard header p { line-height: 1.3; }.rating { margin-top: 12px; }.rating>div:first-child { line-height: 1.5; }
+  .heading h1 { max-width: 580px; font-size: clamp(30px,5.6vw,40px); }.heading p { font-size: 15px; }.heading { margin-bottom: 22px; }.summary { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; margin-bottom: 21px; }.summary article { min-height: 105px; }.summary article>span,.summary p { font-size: 12px; }.summary article>strong { font-size: 30px; }.summary small { font-size: 17px; }.panel { padding: 20px; border-radius: 21px; }.panel h2 { font-size: 23px; }.panel header p { font-size: 12px; }.weekHeader { flex-direction: column; align-items: flex-start; gap: 16px; }.weekNavigation { width: 100%; justify-content: space-between; }.weekNavigation button { width: 40px; height: 40px; }.weekNavigation strong { font-size: 14px; }.legend { gap: 14px; margin-block: 18px 15px; }.legend span { font-size: 11px; }.legend button { font-size: 10px; }.days { gap: 8px; grid-template-columns: repeat(7,minmax(83px,1fr)); padding: 1px 2px 9px; overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: thin; scrollbar-color: #2a4266 transparent; }.day { min-height: 126px; padding: 10px; scroll-snap-align: start; }.dayTop { min-height: 27px; flex-direction: column; gap: 3px; }.dayTop em { font-size: 7px; }.dayScore { font-size: 12px; }.day>strong { margin-top: 4px; }.slots { grid-template-columns: 1fr; gap: 15px; }.slotCard { min-height: 216px; padding: 19px; }.slotCard>header { gap: 13px; flex-wrap: nowrap; }.slotCard h3 { font-size: 18px; }.slotCard header p { font-size: 12px; }.slotIcon { width: 43px; height: 43px; border-radius: 13px; }.slotStatus { font-size: 11px; }.rating>div:first-child { font-size: 14px; }.rating strong { font-size: 14px; }.rating small { font-size: 12px; }.rating>div:last-child { height: 8px; }.slotCard>button { min-height: 42px; font-size: 13px; }.emptySlot { min-height: 0; font-size: 14px; line-height: 1.6; }.topbar { margin-bottom: 25px; }.topbar :global(a) { min-width: 0; }.infoBody { padding: 21px; }
+}
+@media (max-width: 430px) { .heading h1 { font-size: 31px; line-height: 1.18; letter-spacing: -.65px; }.heading p { font-size: 14px; }.eyebrow { padding: 6px 10px; font-size: 9px; }.summary article { padding: 15px 13px; }.summary article>span,.summary p { font-size: 11px; }.summary article>strong { font-size: 29px; }.panel { padding: 18px; }.panel h2 { font-size: 21px; }.legend { gap: 12px; flex-wrap: wrap; }.legend button { margin-left: 0; }.recordsHeader { margin-bottom: 16px; }.slotCard { padding: 17px; }.slotCard h3 { font-size: 17px; } }
+@media (prefers-reduced-motion: reduce) { .app * { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }

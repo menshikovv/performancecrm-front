@@ -1,0 +1,11 @@
+.formBody { display: grid; gap: 23px; padding: 25px; }
+.intro { margin: 0; color: #a2b5d1; font-size: 14px; font-weight: 500; line-height: 1.6; }
+.scoreInput { min-width: 0; margin: 0; padding: 0; border: 0; }
+.scoreInput legend { display: flex; justify-content: space-between; width: 100%; margin-bottom: 12px; color: #e7effc; font-size: 14px; }
+.scoreInput legend span { color: #6edbff; }
+.scoreInput>div { display: grid; grid-template-columns: repeat(10,minmax(0,1fr)); gap: 8px; }
+.scoreInput button { min-height: 44px; padding: 4px; border: 1px solid #2b3c5b; border-radius: 10px; color: #b4c7e2; background: #152239; font-size: 13px; font-weight: 700; }
+.scoreInput button:hover { border-color: #248dc0; }
+.scoreInput button.selected { border-color: #1fbfff; color: white; background: linear-gradient(130deg,#0079ed,#00afd8); box-shadow: 0 4px 15px #008cff25; }
+.scoreInput>p { margin: 9px 0 0; color: #8da0bf; font-size: 11px; font-weight: 500; }
+@media (max-width: 600px) { .formBody { padding: 21px; }.scoreInput>div { grid-template-columns: repeat(5,minmax(0,1fr)); }.scoreInput button { min-height: 44px; font-size: 14px; } }

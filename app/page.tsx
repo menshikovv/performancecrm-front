@@ -1,69 +1,99 @@
-import Image from "next/image";
+"use client";
+
+import { FormEvent, useEffect, useState } from "react";
+import styles from "./page.module.css";
+
+type Screen = "register" | "login";
+type AccessMode = "personal" | "team";
+type Role = "player" | "staff";
+
+function EyeIcon() {
+  return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-5.5 9.5-5.5S21.5 12 21.5 12 18 17.5 12 17.5 2.5 12 2.5 12Z" /><circle cx="12" cy="12" r="2.5" /></svg>;
+}
+
+function PasswordField({ name, placeholder, autoComplete }: { name: string; placeholder: string; autoComplete: string }) {
+  const [visible, setVisible] = useState(false);
+  return <label className={styles.inputWrap}><input name={name} type={visible ? "text" : "password"} placeholder={placeholder} required autoComplete={autoComplete} /><button className={styles.eyeButton} type="button" onClick={() => setVisible(!visible)} aria-label={visible ? "Скрыть пароль" : "Показать пароль"}><EyeIcon /></button></label>;
+}
 
 export default function Home() {
+  const [screen, setScreen] = useState<Screen>("register");
+  const [access, setAccess] = useState<AccessMode>("personal");
+  const [role, setRole] = useState<Role>("player");
+  const [message, setMessage] = useState<{ kind: "error" | "success"; text: string } | null>(null);
+  const [loading, setLoading] = useState(false);
+  useEffect(() => { const frame = requestAnimationFrame(() => { if (new URLSearchParams(window.location.search).get("screen") === "login") setScreen("login"); }); return () => cancelAnimationFrame(frame); }, []);
+
+  const submit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (loading) return;
+    const form = new FormData(event.currentTarget);
+    const password = String(form.get("password") ?? "");
+    if (screen === "register" && password !== String(form.get("passwordRepeat") ?? "")) {
+      setMessage({ kind: "error", text: "Пароли не совпадают" });
+      return;
+    }
+    setLoading(true);
+    setMessage(null);
+    const payload = screen === "login"
+      ? { loginOrEmail: form.get("loginOrEmail"), password }
+      : {
+          name: form.get("name"), email: form.get("email"), password, access,
+          role: access === "team" ? role : null,
+          faceit: form.get("faceit") || null,
+          teamCode: form.get("teamCode") || null,
+        };
+    try {
+      const response = await fetch(`/api/auth/${screen}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload), credentials: "same-origin" });
+      const result = await response.json();
+      if (!response.ok) {
+        const detail = result.error?.message ?? result.detail;
+        throw new Error(detail || "Не удалось выполнить запрос");
+      }
+      setMessage({ kind: "success", text: screen === "login" ? `С возвращением, ${result.user.name}!` : "Аккаунт успешно создан." });
+    } catch (error) {
+      setMessage({ kind: "error", text: error instanceof Error ? error.message : "Сервер недоступен" });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const isTeamPlayer = access === "team" && role === "player";
+  const needsFaceit = access === "personal" || isTeamPlayer;
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className={styles.page}>
+      <div className={styles.overlay} />
+      <section className={styles.hero} aria-label="Performance CRM">
+        <div className={styles.brandSide}>
+          <div className={styles.tagline}><p>Аналитика.<br />Прогресс.<br /><strong>Победа.</strong></p><span>Всё для развития игроков и команд в одном месте.</span></div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+        <section className={styles.authCard} aria-label={screen === "register" ? "Регистрация" : "Вход"}>
+          <h1 className={screen === "register" ? styles.registerTitle : undefined}>{screen === "register" ? "Регистрация" : "С возвращением!"}</h1>
+          <form className={styles.form} onSubmit={submit}>
+            {screen === "register" ? <>
+              <div className={styles.modeSwitch}><button type="button" className={access === "personal" ? styles.selected : ""} onClick={() => setAccess("personal")}>Соло</button><button type="button" className={access === "team" ? styles.selected : ""} onClick={() => setAccess("team")}>Командный доступ</button></div>
+              {access === "team" && <label className={styles.selectWrap}><select value={role} onChange={(event) => setRole(event.target.value as Role)} aria-label="Выберите роль"><option value="player">Я игрок</option><option value="staff">Я стафф</option></select></label>}
+              <input name="name" placeholder="Имя" required autoComplete="name" />
+              <input name="email" type="email" placeholder="Email" required autoComplete="email" />
+              <PasswordField name="password" placeholder="Пароль" autoComplete="new-password" />
+              <PasswordField name="passwordRepeat" placeholder="Повторите пароль" autoComplete="new-password" />
+              {needsFaceit && <input name="faceit" type="url" placeholder="Ссылка Faceit" required />}
+              {access === "team" && <><input name="teamCode" placeholder="Код команды" required={isTeamPlayer} /></>}
+              <button className={styles.submitButton} type="submit">{loading ? "Создаём…" : "Создать аккаунт"}</button>
+              <p className={styles.authLink}>Уже есть аккаунт? <button type="button" onClick={() => { setScreen("login"); setMessage(null); }}>Войти</button></p>
+              <div className={styles.agreements}><label><input type="checkbox" required /> <span>Я принимаю условия <a href="/terms">Пользовательского соглашения</a></span></label><label><input type="checkbox" required /> <span>Я принимаю <a href="/privacy">политику конфиденциальности</a></span></label></div>
+            </> : <>
+              <input name="loginOrEmail" type="text" placeholder="Логин или Email" required autoComplete="username" />
+              <PasswordField name="password" placeholder="Пароль" autoComplete="current-password" />
+              <button type="button" className={styles.forgotPassword}>Забыли пароль?</button>
+              <button className={styles.submitButton} type="submit">{loading ? "Входим…" : "Войти"}</button>
+              <p className={styles.authLink}>У меня нет аккаунта <button type="button" onClick={() => { setScreen("register"); setMessage(null); }}>Зарегистрироваться</button></p>
+            </>}
+            {message && <p role="alert" className={message.kind === "error" ? styles.error : styles.success}>{message.text}</p>}
+          </form>
+        </section>
+      </section>
+    </main>
   );
 }
