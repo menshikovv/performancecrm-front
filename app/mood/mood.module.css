@@ -42,7 +42,7 @@
 .slotIndicators i { height: 6px; border-radius: 999px; background: #29324b; }
 .records { margin-bottom: 0; }
 .recordsHeader { margin-bottom: 22px; }.recordsHeader>p::first-letter { text-transform: uppercase; }
-.slots { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; animation: contentIn .2s ease; }
+.slots { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; animation: contentIn var(--motion-panel) var(--motion-ease-out); }
 .slotCard { min-width: 0; min-height: 254px; padding: 21px 20px; border: 1px solid #24304b; border-top: 3px solid var(--slot-color); border-radius: 20px; background: #161d31; }
 .slotCard>header { display: flex; align-items: center; gap: 14px; min-height: 45px; margin-bottom: 18px; }
 .slotIcon { display: grid; place-items: center; width: 45px; height: 45px; flex-shrink: 0; border-radius: 14px; color: var(--slot-color); background: color-mix(in srgb,var(--slot-color) 15%,transparent); }

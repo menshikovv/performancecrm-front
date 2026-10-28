@@ -147,8 +147,8 @@
 .dangerSolidButton { color: white; background: #cb435b; }
 .iconButton { display: grid; place-items: center; width: 39px; height: 39px; border: 1px solid #293550; border-radius: 12px; color: #a9b9d4; background: #182239; }
 .iconButton:hover { color: white; background: #253752; }
-.backdrop { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 24px; background: #030710aa; backdrop-filter: blur(8px); animation: fadeIn .18s ease both; }
-.modal { width: min(510px,100%); max-height: min(820px,calc(100dvh - 48px)); overflow: auto; border: 1px solid #2a3754; border-radius: 23px; color: var(--ink); background: #111a2d; box-shadow: 0 32px 100px #0007; scrollbar-width: thin; scrollbar-color: #35435e transparent; animation: modalIn .22s ease both; }
+.backdrop { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 24px; background: #030710aa; backdrop-filter: blur(8px); animation: fadeIn var(--motion-fast) var(--motion-ease-ui) both; }
+.modal { width: min(510px,100%); max-height: min(820px,calc(100dvh - 48px)); overflow: auto; border: 1px solid #2a3754; border-radius: 23px; color: var(--ink); background: #111a2d; box-shadow: 0 32px 100px #0007; scrollbar-width: thin; scrollbar-color: #35435e transparent; animation: modalIn var(--motion-panel) var(--motion-ease-out) both; }
 .modalWide { width: min(720px,100%); }
 .modalHeader { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 78px; padding: 18px 23px; border-bottom: 1px solid #26314b; background: #111a2df5; backdrop-filter: blur(12px); }
 .modalHeader h2 { margin: 0; font-size: 21px; font-weight: 800; letter-spacing: -.5px; }
@@ -213,7 +213,7 @@
 .settingsBody { display: grid; gap: 27px; padding: 25px; }
 .settingsBody h3 { margin: 0 0 8px; font-size: 16px; }
 .settingsBody p { margin: 0 0 14px; color: #9cacc7; font-size: 13px; font-weight: 500; line-height: 1.6; }
-.toast { position: fixed; right: 25px; bottom: 25px; z-index: 200; display: flex; align-items: center; gap: 11px; max-width: min(480px,calc(100vw - 32px)); padding: 14px 18px; border: 1px solid #2c4969; border-radius: 15px; color: #dcefff; background: #172a42; box-shadow: 0 16px 50px #0005; font-size: 13px; animation: toastIn .22s ease both; }
+.toast { position: fixed; right: 25px; bottom: 25px; z-index: 200; display: flex; align-items: center; gap: 11px; max-width: min(480px,calc(100vw - 32px)); padding: 14px 18px; border: 1px solid #2c4969; border-radius: 15px; color: #dcefff; background: #172a42; box-shadow: 0 16px 50px #0005; font-size: 13px; animation: toastIn var(--motion-panel) var(--motion-ease-out) both; }
 .toast>span { display: grid; place-items: center; flex-shrink: 0; width: 27px; height: 27px; border-radius: 8px; color: #72daff; background: #143e5d; }
 .app button:focus-visible,.app a:focus-visible,.app input:focus-visible,.app select:focus-visible,.app textarea:focus-visible { outline: 3px solid #34b7ff99; outline-offset: 3px; }
 @keyframes fadeIn { from { opacity: 0; } }

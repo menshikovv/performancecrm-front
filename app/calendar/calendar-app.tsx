@@ -1,6 +1,6 @@
 "use client";
 
-import { CSSProperties, FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import { CSSProperties, FormEvent, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -156,33 +156,31 @@ export default function CalendarApp() {
     catch { setStorageError("Не удалось сохранить настройки Staff-календаря. События не изменены."); }
   };
 
-  useEffect(() => {
-    const frame = window.requestAnimationFrame(() => {
-      const saved = readStore();
-      const params = new URLSearchParams(window.location.search);
-      if (params.get("role") === "staff" || params.get("role") === "player") saved.role = params.get("role") === "staff" ? "manager" : "player";
-      try { writeStore(saved); } catch { setStorageError("Локальное сохранение недоступно. Изменения могут не сохраниться."); }
-      setStore(saved);
-      if (saved.role === "manager") {
-        const view = readStaffCalendarView(); setSelectedOwnerId(view.ownerId); setSelectedDate(view.date); setVisibleMonth(parseLocalDate(view.month));
-      }
-      const eventId = params.get("event");
-      const event = saved.events.find((item) => item.id === eventId);
-      if (event) {
-        setDetailsId(event.id);
-        setSelectedDate(event.date);
-        const eventDate = parseLocalDate(event.date);
-        setVisibleMonth(new Date(eventDate.getFullYear(), eventDate.getMonth(), 1));
-        setSelectedOwnerId(event.ownerId);
-        if (saved.role === "manager") saveStaffView({ ownerId: event.ownerId, date: event.date, month: event.date.slice(0, 8) + "01" });
-        calendarRef.current?.getApi().gotoDate(event.date);
-      }
-      setHydrated(true);
-    });
+  useLayoutEffect(() => {
+    const saved = readStore();
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("role") === "staff" || params.get("role") === "player") saved.role = params.get("role") === "staff" ? "manager" : "player";
+    try { writeStore(saved); } catch { setStorageError("Локальное сохранение недоступно. Изменения могут не сохраниться."); }
+    setStore(saved);
+    if (saved.role === "manager") {
+      const view = readStaffCalendarView(); setSelectedOwnerId(view.ownerId); setSelectedDate(view.date); setVisibleMonth(parseLocalDate(view.month));
+    }
+    const eventId = params.get("event");
+    const event = saved.events.find((item) => item.id === eventId);
+    if (event) {
+      setDetailsId(event.id);
+      setSelectedDate(event.date);
+      const eventDate = parseLocalDate(event.date);
+      setVisibleMonth(new Date(eventDate.getFullYear(), eventDate.getMonth(), 1));
+      setSelectedOwnerId(event.ownerId);
+      if (saved.role === "manager") saveStaffView({ ownerId: event.ownerId, date: event.date, month: event.date.slice(0, 8) + "01" });
+      calendarRef.current?.getApi().gotoDate(event.date);
+    }
+    setHydrated(true);
     const sync = (event: StorageEvent) => { if (event.key === STORAGE_KEY || event.key === null) setStore(readStore()); };
     const focus = () => setStore(readStore());
     window.addEventListener("storage", sync); window.addEventListener("focus", focus);
-    return () => { window.cancelAnimationFrame(frame); window.removeEventListener("storage", sync); window.removeEventListener("focus", focus); };
+    return () => { window.removeEventListener("storage", sync); window.removeEventListener("focus", focus); };
   }, []);
   useEffect(() => { if (!toast) return; const timer = window.setTimeout(() => setToast(null), 3200); return () => window.clearTimeout(timer); }, [toast]);
   useEffect(() => {

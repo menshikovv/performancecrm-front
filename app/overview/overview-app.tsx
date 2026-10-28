@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useEffect, useId, useMemo, useState } from "react";
+import { FormEvent, useEffect, useId, useLayoutEffect, useMemo, useState } from "react";
 import { CrmIcon as Icon, CrmModal as Modal, CrmSidebar } from "../components/crm-ui";
 import { CalendarStore, readStore, writeStore } from "../calendar/calendar-data";
 import shell from "../calendar/calendar.module.css";
@@ -87,18 +87,18 @@ export default function OverviewApp() {
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
-  useEffect(() => {
+  useLayoutEffect(() => {
     const load = () => { const now = new Date(); setToday(now); setStore(readOverviewStore(now)); setCalendar(readStore()); setHydrated(true); };
+    load();
+    const previewRole = new URLSearchParams(location.search).get("role");
+    if (previewRole === "staff" || previewRole === "player") { const next = { ...readStore(), role: previewRole === "staff" ? "manager" as const : "player" as const }; setCalendar(next); writeStore(next); }
+    const section = new URLSearchParams(location.search).get("section");
+    if (section === "mood" || section === "recovery" || section === "game") setDetail(section);
     const frame = requestAnimationFrame(() => {
-      load();
-      const previewRole = new URLSearchParams(location.search).get("role");
-      if (previewRole === "staff" || previewRole === "player") { const next = { ...readStore(), role: previewRole === "staff" ? "manager" as const : "player" as const }; setCalendar(next); writeStore(next); }
-      const section = new URLSearchParams(location.search).get("section");
-      if (section === "mood" || section === "recovery" || section === "game") setDetail(section);
       if (section === "stats") document.getElementById("weekly-review")?.scrollIntoView();
       if (section === "tests") document.getElementById("daily-tests")?.scrollIntoView();
-      if (section === "plans") setToast("В демоверсии все виджеты доступны без подписки");
     });
+    if (section === "plans") setToast("В демоверсии все виджеты доступны без подписки");
     const sync = (event: StorageEvent) => { if (event.key === OVERVIEW_STORAGE_KEY || event.key === "calendar-app:v1" || event.key === null) load(); };
     const onFocus = () => { setToday(new Date()); };
     window.addEventListener("storage", sync); window.addEventListener("focus", onFocus);

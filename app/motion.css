@@ -1,0 +1,43 @@
+:root {
+  --motion-fast: 220ms;
+  --motion-panel: 420ms;
+  --motion-reveal-duration: 780ms;
+  --motion-stagger: 60ms;
+  --motion-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-ease-ui: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* Only JS-prepared, not-yet-painted/offscreen blocks receive the waiting state. */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+  [data-crm-motion="waiting"] { opacity: 0; translate: 0 18px; transition: none !important; }
+  [data-crm-motion="waiting"][data-crm-motion-kind="stationary"] { translate: none; }
+  /* Opacity/translate belong only to the reveal, never a second CSS transition. */
+  main [data-crm-motion] {
+    transition-property: color, background-color, border-color, box-shadow, filter, transform, scale !important;
+  }
+  main :is(button, a, input, select, textarea, summary) {
+    transition-property: color, background-color, border-color, box-shadow, opacity, filter, transform, scale;
+    transition-duration: var(--motion-fast) !important;
+    transition-timing-function: var(--motion-ease-ui) !important;
+  }
+  main :is(article, [data-motion="reveal"]) {
+    transition-duration: var(--motion-panel) !important;
+    transition-timing-function: var(--motion-ease-out) !important;
+  }
+  main :is(button, a, summary):active:not(:disabled):not([aria-disabled="true"]) { scale: 0.985; }
+  main [data-motion="off"], main [data-motion="off"] * {
+    transition: none !important;
+    animation: none !important;
+    scale: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  body *, body *::before, body *::after {
+    scroll-behavior: auto !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}

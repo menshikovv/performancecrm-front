@@ -89,7 +89,7 @@ export default function TeamNutrition({ today }: { today: Date }) {
             <div className={styles.dayHeading}><button onClick={() => update(value => ({ ...value, day }))} title="Показать сводку за этот день" aria-label={`Сводка: ${dayLabel(day, today)}`}>{dayLabel(day, today, true)}</button><span>{recordsLabel(rows.length)}</span></div>
             <div className={styles.mealGrid}>{rows.map(row => {
               const player = staffPlayers.find(p => p.id === row.player)!;
-              return <button className={styles.mealCard} key={row.id} onClick={() => setMealId(row.id)} aria-label={`${row.title}, ${player.name}, ${row.calories} ккал, ${row.time}`} data-meal-player={row.player} data-meal-photo={row.photo}>
+              return <button className={styles.mealCard} data-motion="reveal" key={row.id} onClick={() => setMealId(row.id)} aria-label={`${row.title}, ${player.name}, ${row.calories} ккал, ${row.time}`} data-meal-player={row.player} data-meal-photo={row.photo}>
                 <div className={styles.cardImage}><MealVisual photo={row.photo}/><span className={styles.playerTag}>{player.name}</span></div>
                 <div className={styles.mealText}><strong>{row.title}</strong><span>{number(row.calories)} ккал · {row.time}</span></div>
               </button>;

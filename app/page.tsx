@@ -65,10 +65,10 @@ export default function Home() {
     <main className={styles.page}>
       <div className={styles.overlay} />
       <section className={styles.hero} aria-label="Performance CRM">
-        <div className={styles.brandSide}>
+        <div className={styles.brandSide} data-motion="reveal">
           <div className={styles.tagline}><p>Аналитика.<br />Прогресс.<br /><strong>Победа.</strong></p><span>Всё для развития игроков и команд в одном месте.</span></div>
         </div>
-        <section className={styles.authCard} aria-label={screen === "register" ? "Регистрация" : "Вход"}>
+        <section className={styles.authCard} data-motion-swap aria-label={screen === "register" ? "Регистрация" : "Вход"}>
           <h1 className={screen === "register" ? styles.registerTitle : undefined}>{screen === "register" ? "Регистрация" : "С возвращением!"}</h1>
           <form className={styles.form} onSubmit={submit}>
             {screen === "register" ? <>

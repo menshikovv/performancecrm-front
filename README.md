@@ -25,6 +25,14 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 The interface uses locally bundled Inter Variable with Cyrillic support. Font files are served by the application without an external font CDN.
 
+## Shared motion
+
+All routes use the same motion system from `app/components/crm-motion.tsx` and `app/motion.css`: 780 ms opacity/18 px reveals, a capped 60 ms stagger (180 ms maximum), 220 ms control feedback and 420 ms panels/dialogs. The shared layout installs it once. IntersectionObserver reveals individual cards/KPI tiles and semantic blocks, not their whole grid at the same time. There is no wheel/touch interception or continuous scroll handler. Native smooth scrolling applies to in-page navigation; Next.js owns route scroll restoration via `data-scroll-behavior`.
+
+Server HTML, disabled JavaScript and unsupported animation APIs remain visible by default. Only offscreen or not-yet-painted newly inserted blocks get a temporary JS-managed waiting state, synchronously before paint. Content already on screen is never dimmed to start a fade, and the same DOM node is not restarted when its values or children change. Initial visible server-rendered blocks only move gently; new client-side routes are prepared in a layout effect before paint. Calendar/Overview load their local state before the first client navigation paint, avoiding an intermediate empty loading shell. Sticky elements fade without translation; keyboard focus/clicks reveal pending content immediately. Reduced motion, tab hiding and route cleanup release every pending block, and observers/animations are cleaned up. Custom leaf cards may use `data-motion="reveal"`, and sensitive regions `data-motion="off"`.
+
+The OS `prefers-reduced-motion` setting disables the motion system, CSS animations/transitions and smooth scrolling, including when changed while the page is open. FullCalendar internals and modal contents are not scroll-revealed; dialogs use the shared panel animation. Cognitive-test content opts out of decorative motion so reaction/memory stimuli remain immediate. No new animation library, backend requests or storage migration is required.
+
 ## Calendar
 
 Open `/calendar` without signing in to preview the CRM interface. The calendar uses FullCalendar with month and week views, a selected-day agenda, event links, and create/edit/delete forms. The sidebar demo switch opens the staff view with personal, team, and player calendar filters.
